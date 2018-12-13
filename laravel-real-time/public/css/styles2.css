@@ -1,0 +1,11 @@
+.navbar .navbar-header .navbar-brand {
+	color: #FDFFFC;
+	font-weight: bold;
+}
+
+nav{
+	position: fixed;
+}
+.card-link,.testLike{
+	color: black;
+}

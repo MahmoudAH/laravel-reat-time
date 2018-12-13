@@ -18,6 +18,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/friends', 'HomeController@friends')->name('friends');
 
 Route::resource('/posts', 'PostController');
 Route::get('/notify/{user_id}/{post_id}', 'PostController@notify');
