@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Events\MessageSent;
 use App\Message;
+use App\User;
 use Auth;
 
 class ChatsController extends Controller
@@ -21,7 +22,8 @@ class ChatsController extends Controller
 	 */
 	public function index()
 	{
-	  return view('chat');
+	  $users = User::all();	
+	  return view('chat',compact('users'));
 	}
 
 	/**

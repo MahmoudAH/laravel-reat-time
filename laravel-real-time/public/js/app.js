@@ -53586,14 +53586,38 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['user'],
 
     data: function data() {
         return {
-            newMessage: ''
+            newMessage: '',
+            typing: false,
+            man: ''
         };
+    },
+    created: function created() {
+        var _this2 = this;
+
+        var _this = this;
+
+        Echo.private('chat').listenForWhisper('typing', function (e) {
+            _this2.man = e.user;
+            _this2.typing = e.typing;
+
+            // remove is typing indicator after 0.9s
+            setTimeout(function () {
+                _this.typing = false;
+            }, 900);
+        });
     },
 
 
@@ -53605,6 +53629,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
 
             this.newMessage = '';
+        },
+        isTyping: function isTyping() {
+            var channel = Echo.private('chat');
+
+            setTimeout(function () {
+                channel.whisper('typing', {
+                    user: Laravel.user,
+                    typing: true
+                });
+            }, 300);
         }
     }
 });
@@ -53646,6 +53680,7 @@ var render = function() {
           }
           return _vm.sendMessage($event)
         },
+        keydown: _vm.isTyping,
         input: function($event) {
           if ($event.target.composing) {
             return
@@ -53654,6 +53689,31 @@ var render = function() {
         }
       }
     }),
+    _vm._v(" "),
+    _c("div", [
+      _c(
+        "span",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.typing,
+              expression: "typing"
+            }
+          ],
+          staticClass: "help-block",
+          staticStyle: { "font-style": "italic" }
+        },
+        [
+          _vm._v(
+            "\n                        " +
+              _vm._s(_vm.man.name) +
+              " is typing...\n      "
+          )
+        ]
+      )
+    ]),
     _vm._v(" "),
     _c("span", { staticClass: "input-group-btn" }, [
       _c(

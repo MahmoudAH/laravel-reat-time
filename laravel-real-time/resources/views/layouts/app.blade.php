@@ -27,7 +27,15 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.js"></script>
-
+    
+    <!--laravel object-->
+    <script>
+      window.Laravel = {!! json_encode([
+        'csrfToken' => csrf_token(),
+        'user' => Auth::user(),
+        'pusherKey' => config('broadcasting.connections.pusher.key'),
+      ]) !!};
+    </script>
       
     @yield('styles')
 </head>
