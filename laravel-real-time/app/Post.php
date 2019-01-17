@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Auth;
 class Post extends Model
 {
   protected $fillable = [
@@ -19,4 +19,20 @@ class Post extends Model
   {
     return $this->hasMany('App\Comment');
   }
+
+  /*public function likes(){
+    return $this->hasMany('App\Like');
+  }*/
+  
+  public function likes()
+  {
+    return $this->belongsToMany(User::class, 'likes')->withTimeStamps();
+  }
+  public function liked()
+  {
+    return (bool) Like::where('user_id', Auth::id())
+                        ->where('post_id', $this->id)
+                        ->first();
+  }
+
 }

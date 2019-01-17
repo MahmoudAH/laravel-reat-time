@@ -5384,7 +5384,7 @@ tbody.collapse.in {
   }
 }
 
-.navbar-fixed-top {
+.navbar-static-top {
   z-index: 1000;
   border-width: 0 0 1px;
 }

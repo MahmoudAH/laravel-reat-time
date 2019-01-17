@@ -6,24 +6,24 @@ use Illuminate\Http\Request;
 use App\Post;
 use App\user;
 use Auth;
+use App\Http\Resources\PostCollection;
+
 use App\Notifications\NewPost;
 
 class PostController extends Controller
 {
-    public function __construct()
-    {
-      $this->middleware('auth', ['except' => ['show']]);
-    }
-
+   
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+    
     public function index()
     {
       $posts = Post::paginate(25);
-      return view('posts.index')->withPosts($posts);
+
+      return view('posts.index',compact('posts'));
     }
 
     /**

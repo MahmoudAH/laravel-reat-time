@@ -1,6 +1,5 @@
 @extends('layouts.app')
 @section('styles')
-
 <style type="text/css">
       .liked{
         color: blue;
@@ -15,34 +14,59 @@
         color: black
       }
      </style>
+      <link href="{{ asset('css/postsStyle.css') }}" rel="stylesheet">
+      <link src="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.css"></link>
+     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+     <link href="https://fonts.googleapis.com/css?family=Shrikhand" rel="stylesheet">
 
+     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+     
 @endsection
 @section('content')
+<!-- show flash message -->
+<div class="panel-body" style="text-align: center;color: #009688;padding: 0;margin: 0 80px;font-size: 20px">
+                    @if (session('message'))
+                        <div class="alert alert-success">
+                            {{ session('message') }}
+                        </div>
+
+                    @endif
+</div>
+
 <div class="container" id="home">
     <div class="row">
-    	<div class="col-md-3">
-          <div class="list-group" style="margin-bottom: 50px">
-            <a href="#" class="list-group-item ">
-              <img src="http://placeimg.com/80/80" class="img-responsive" width="80%" height="100" style="">
-            
-              <h2>{{ucfirst(auth()->user()->name)}}</h2>
-                <p style="margin-left: 10px">khjhbjg  gvgfg gvg jhbjg  gvgfg gvg fgf gftf f ytjhbjg  gvgfg gvg fgf gftf f ytfgf gftf f yt fyfy</p>
-                    <!--  
-              <p class="col-md-4">
-                <strong>tweets</strong>   <br>
-                 22
-              </p>
-              <p class="col-md-4">
-                <strong>tweets</strong> <br>
-                 445 
+      <div class="col-md-3">
+          
+          <!--card left profile user-->
+ <div class="card" style="margin-bottom: 40px;">
+  <div class="card-image">
+    <figure class="image is-4by3">
+      <img src="http://placeimg.com/80/80" class="img-responsive" width="100%" height="100" style="">
+    </figure>
+  </div>
+  <div class="card-content " style="padding: 20px">
+    <div class="media">
+      <div class="media-left">
+        <figure class="image is-48x48">
+          <img src="http://placeimg.com/80/80" class="img-responsive" width="80%" height="100" style="">
+        </figure>
+      </div>
+      <div class="media-content">
+        <p class="title is-4" style="font-style: bold;font-family: 'Shrikhand', cursive;
+           font-size: 20px">{{ucfirst(Auth::user()->name)}}</p>
+        <p class="subtitle is-6" style="margin-top: -15px">@johnsmith</p>
+      </div>
+    </div>
 
-              </p>
-              <p class="col-md-4">
-                <strong>tweets</strong>  <br>
-                 566
-              </p>-->
-            </a>
-          </div>
+    <div class="content" style="padding: 5px">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      Phasellus nec iaculis mauris. 
+      
+      <br>
+      <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+    </div>
+  </div>
+</div>
           <div class="list-group">
  
             <a href="#" class="list-group-item">
@@ -61,42 +85,107 @@
              log out
             </a>
           </div>
-    	</div>
+      </div>
 
         <div class="col-md-6 ">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                <a href="{{ route('posts.create') }}">Create New Post</a></div>
+                   <a href="{{ route('posts.create') }}">Create New Post</a>
+                </div>
                 <div class="panel-body">
-                    @foreach($posts as $post)
-                     <div class="card" style="">
-                       <div class="card-body" style="margin-top: -20px">
-                          <a class="card-title" style="color: #57D1C9;padding-bottom: 10px"> <h3>{{ucfirst($post->user->name)}}</h3></a>
-                         
-                         <h6 class="card-subtitle mb-2 text-muted">{{ $post->updated_at->toFormattedDateString() }}<i class="fa fa-globe" aria-hidden="true" style="padding-left: 10px;padding-bottom: 15px"></i>
-                        </h6>                       
-                        <a href="{{route('posts.show',$post->id)}}">
-                          <p class="card-text">{{$post->content}}</p>
-                        </a> 
-                        <hr>
-                       <span v-if="liked"> @{{likes}} <i class="fa fa-heart-o" aria-hidden="true" class="fa fa-heart" style=" " ></i> </span>
+                 @if($posts->count() >0) 
+                  @foreach($posts as $post)
+                   <section class="post-heading">
+                    <div class="row">
+                        <div class="col-md-11">
+                            <div class="media">
+                              <div class="media-left">
+                                <a href="#">
+                                  <img class="media-object photo-profile" src="http://0.gravatar.com/avatar/38d618563e55e6082adf4c8f8c13f3e4?s=40&d=mm&r=g" width="40" height="40" alt="...">
+                                </a>
+                              </div>
+                              <div class="media-body">
+                                <a href="#" class="anchor-username"><h4 class="media-heading">{{ucfirst($post->user->name)}}</h4></a> 
+                                <h6  class="anchor-time">
+                                  {{ $post->updated_at->toFormattedDateString() }}<i class="fa fa-globe" aria-hidden="true" style="padding-left: 10px;padding-bottom: 15px"></i></h6>
+                              </div>
+                            </div>
+                        </div>
+                         <div class="col-md-1">
+                             <a href="#"><i class="glyphicon glyphicon-chevron-down"></i></a>
+                         </div>
+                    </div>             
+               </section>
+               <section class="post-body">
+                   <a href="{{route('posts.show',$post->id)}}">
+                          <p class="card-text">{{$post->content}}
+                          </p>
+                    </a> 
+               </section>
+                 
+                    <hr>
+                    
+                  <section class="post-footer" style="margin-top: -20px">
                         
-                        <hr v-if="liked" style="margin-top: 2px;margin-bottom: 2px">              
-                         
-                         <a href="#" class="card-link" style="padding-right: 60px;" @click.prevent="liked =! liked" :class="[card-link,testLike]" ><i class="fa fa-heart" aria-hidden="true"></i> <span >Like</span> </a>
-                         
-                         <a href="#" class="card-link" style="padding-right: 60px" @click.prevent=" commentHidden =! commentHidden" :class="testComment"><i class="fa fa-commenting" aria-hidden="true"></i>
+                        
+                       @if($post->likes()->count() > 0)
+                       <a href=""   data-toggle="modal" data-target="#exampleModal">
+                       <span > {{$post->likes()->count()}} <i class="fa fa-heart-o" aria-hidden="true" class="fa fa-heart" style=" " ></i> </span></a>
+
+                       
+                       <!-- Button trigger modal -->
+
+                         <!-- Modal -->
+                         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                           <div class="modal-dialog" role="document">
+                             <div class="modal-content">
+                               <div class="modal-header">
+                                 <h5 class="modal-title" id="exampleModalLabel">users who liked on this post</h5>
+                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                   <span aria-hidden="true">&times;</span>
+                                 </button>
+                               </div>
+                               <div class="modal-body">
+                                 @foreach($post->likes as $like)
+                                                <p>{{$like->name}}</p>
+                                                @endforeach
+                               </div>
+                               <div class="modal-footer">
+                                 <button type="button" class="btn btn-secondary"                          data-dismiss="modal">Close</button>
+                               </div>
+                             </div>
+                           </div>
+                         </div>
+                        @endif
+                        
+                        @if($post->comments()->count() > 0)
+                        <a href="" class="pull-right" @click.prevent=" commentHidden =! commentHidden" :class="testComment">
+                         <span > {{$post->comments()->count()}} comment </span></a>
+                        @endif
+                        <hr style="margin-top: 2px;margin-bottom: 2px">     
+                        
+
+                         <!--like button-->
+                        <like :post={{ $post->id }}
+                           :favorited={{ $post->liked() ? 'true' : 'false' }}>
+              
+                         </like>         
+                        
+                        <!--comment button--> 
+                         <a href="#" class="card-link" style="padding-right: 60px" ><i class="fa fa-commenting" aria-hidden="true"></i>
                          Comment </a>
                          
                          <a href="#" class="card-link" style="padding-right: "><i class="fa fa-share" aria-hidden="true"></i>
                          Share</a>
-                       </div>
-                     </div> 
+                       </section>
+                      
+                     <!--comment box-->
+                     <comment :post={{ $post->id }}
+                              :user="{{  Auth::user()->toJson() }}">
+                       
+                     </comment>
                      
-                     <textarea class="form-control" rows="3" name="body" placeholder="Write a comment" v-model="commentBox" style="margin-top:5px;
-                     height: 50px" @keyup.enter="postComment"></textarea>
                      
-                     <p v-text="commentBox" style="padding: 3px;color: #09194F"></p>
                     @foreach ($post->comments as $comment) 
                      <div class="media" style="margin-top:20px;"  v-if="testComment">
                        <div class="media-left">
@@ -114,100 +203,71 @@
                        </div>
                      </div>
                      @endforeach
-                     <hr>                   
+                     <hr style="font-size:15px">                   
                     @endforeach
+                   @else
+                   <p>add new friends to see your posts<a href="{{ route('friends.index') }}"> add now</a></p>
+                   @endif 
                 </div>
             </div>
-            {{ $posts->links() }}
+            
         </div>
         <div class="col-md-3">
           <div class="list-group" style="margin-bottom: 50px">
             <a href="#" class="list-group-item ">
-              <strong>who to follow..</strong>
-                <td>
-            <div><img class="media-object" src="http://placeimg.com/80/80" alt="..."></div>
-            <div style="float: right;margin-top: -70px"> <strong>mahmiyd ali</strong> <br>
-              <span style="padding: 10px;border-radius: 50%;background-color: #FCFCFC"><strong style="color: blue">follow</strong> </span> </div>
-             </td><hr>
-             <td>
-            <div><img class="media-object" src="http://placeimg.com/80/80" alt="..."></div>
-            <div style="float: right;margin-top: -70px"> <strong>mahmiyd ali</strong> <br>
-              <span style="padding: 10px;border-radius: 50%;background-color: #FCFCFC"><strong style="color: blue">follow</strong> </span> </div>
-             </td><hr><td>
-            <div><img class="media-object" src="http://placeimg.com/80/80" alt="..."></div>
-            <div style="float: right;margin-top: -70px"> <strong>mahmiyd ali</strong> <br>
-              <span style="padding: 10px;border-radius: 50%;background-color: #FCFCFC"><strong style="color: blue">follow</strong> </span> </div>
-             </td>
+              <strong style="">Pepoel may you know..</strong>
+            </a>
+            <a href="#" class="list-group-item ">
+              
+                @foreach($peopelToFollow as $peopel )
+                <td style="padding: 5px;margin-bottom: 5px">
+                    <div style="float: left;">
+                      
+                      <strong>{{str_limit($peopel->name,7)}}</strong>
+                    </div>
+                    <div style="float: right;">
+                      <form method="POST" action="{{route('friend.add',$peopel->id)}}">
+                                          {{ csrf_field() }}
+                                        <button class="btn btn-primary" >
+                                          <i class="fa fa-user-plus" aria-hidden="true"></i>
+                                           Add
+                                        </button></form> 
+                    </div><div class="clearfix"></div>
+                 </td>
+                <hr>
+                @endforeach
                   
             </a>
             <span  class="list-group-item">
               <i class="fa fa-user" aria-hidden="true" style="padding-right: 10px"></i>
-              <a href=""> Find people you know</a> 
+              <a href="{{ route('friends.index') }}"> Find people you know</a> 
             </span>
           </div>
+       </div>    
       
     </div>    
 </div>
+
 @endsection
 @section('scripts')
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
  <script>
-
     const app = new Vue({
       el: '#app',
       data: {
-      	commentHidden: false,
+        commentHidden: false,
         liked: false,
         likes: '',
         comments: {},
-        commentBox: '',
-        post: {!! $post->toJson() !!},
-        user: {!! Auth::check() ? Auth::user()->toJson() : 'null' !!},
-        //test:@{!!comment.id==comment.post_id? 'commentBox':''!!}
+        commentBox: '',    
+        
       },
       computed:{
         testComment:function(){
-        	
-           	return this.commentHidden;
+          
+            return this.commentHidden;
         },
         testLike:function(){
           return (this.liked) ? 'liked':'';
-        }
-      },
-      mounted() {
-        this.listen();
-      },
-      methods: {
-        postComment() {
-          axios.post('/api/posts/'+this.post.id+'/comment', {
-            api_token: this.user.api_token,
-            body: this.commentBox
-          })
-          .then((response) => {
-            this.comments.unshift(response.data);
-            this.commentBox = '';
-          })
-          .catch((error) => {
-            console.log(error);
-          })
-        },
-        listen() {
-          Echo.channel('post.'+this.post.id)
-              .listen('NewComment', (comment) => {
-                this.comments.unshift(comment);
-              })
-        }
-      },
-      watch:{
-        liked:function(value){
-          if (value) {
-            this.likes ++ ;
-          }else{
-            this.likes -- ;
-          }
         }
       }
     });

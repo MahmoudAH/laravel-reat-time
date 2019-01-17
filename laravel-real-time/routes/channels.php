@@ -15,6 +15,12 @@ Broadcast::channel('App.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
 
+//only authenticated users
+ Broadcast::channel('chat', function ($user) {
+  return Auth::check();
+});
+ 
+
 //Broadcast::channel('post.{id}', function ($user, $id) {
   //  return true;
     //return $user->id == \App\Post::find($id)->user_id;

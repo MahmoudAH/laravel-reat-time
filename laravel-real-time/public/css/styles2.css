@@ -3,9 +3,43 @@
 	font-weight: bold;
 }
 
+
 nav{
 	position: fixed;
 }
 .card-link,.testLike{
 	color: black;
+}
+.navbar-right li a{
+	color: #f5f4e8
+
+}
+.navbar-right li a:hover{
+	background-color: #a696c8
+	color:#2470a0;
+}
+nav .navbar-header{
+	float: left;
+}
+/**
+*new nav style
+*/
+.navbar{
+	font-weight: bold;
+	
+	font-size: 20px;
+	color:#fff;
+}
+.navbar .nav-item{
+	padding-right: 40px;
+	
+}
+navbar .nav-item a{
+	color: #FDFFFC;
+}
+nav .navbar-brand{
+    margin-right: 60px;
+}
+.navbarl ul li{
+	list-style: none;
 }
